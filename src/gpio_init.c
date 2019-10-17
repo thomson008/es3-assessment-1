@@ -13,15 +13,12 @@ XStatus initGpio(void)
 	// Init 7 segment display
 	status = XGpio_Initialize(&SEG7_HEX_OUT, 0);
 	if (status != XST_SUCCESS)
-	{
 		return XST_FAILURE;
-	}
+
 	 // Init display selection
 	status = XGpio_Initialize(&SEG7_SEL_OUT, 1);
 	if (status != XST_SUCCESS)
-	{
 		return XST_FAILURE;
-	}
 	
 	// Init 16 slide switches
 	status = XGpio_Initialize(&SLIDE_SWITCHES, 7);

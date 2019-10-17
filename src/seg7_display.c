@@ -62,7 +62,8 @@ void calculateDigits(s16 number)
 	u8 firstDigit;
 
 	// Added handling for negative numbers
-	if (number < -99) {
+	if (number < -99)
+	{
 		numOfDigits = 4;
 
 		fourthDigit = - number % 10;

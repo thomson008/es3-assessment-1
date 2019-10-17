@@ -70,6 +70,7 @@ void runCalculator()
 	{
 		// Call the method to display number
 		displayNumber(result);
+		XGpio_DiscreteWrite(&LED_OUT, 1, result);
 
 		// Read the 16 bit number from slide switches
 		slideSwitchIn = XGpio_DiscreteRead(&SLIDE_SWITCHES, 1);
@@ -93,8 +94,6 @@ void runCalculator()
 			multiply(firstOperand, secondOperand);
 		else if (rightButton)
 			divide(firstOperand, secondOperand);
-
-		XGpio_DiscreteWrite(&LED_OUT, 1, result);
 	}
 }
 
