@@ -16,7 +16,7 @@ void displayNumber(s16 number)
 	 * Therefore, check if the number is less than or equal to 9999
 	 * and display the number otherwise, display dashes in all the four segments
 	 */
-	if (number <= 9999 && number > -999)
+	if (number <= 9999 && number >= -999)
 	{
 		// Call the calculateDigits method to determine the digits of the number
 		calculateDigits(number);
@@ -40,8 +40,6 @@ void displayNumber(s16 number)
 	}
 	else
 	{
-
-		// << Write the code to display dashes for out-of-range numbers >>
 		count = 1;
 
 		while (count < 5)
@@ -50,11 +48,9 @@ void displayNumber(s16 number)
 			digitNumber = count;
 			count++;
 
-
 			while(!digitDisplayed);
 			digitDisplayed = FALSE;
 		}
-
 	}
 }
 

@@ -1,18 +1,21 @@
-/*
- * operations.c
- *
- *  Created on: 16 Oct 2019
- *      Author: Tomek
- */
 #include "xil_types.h"
 #include "xgpio.h"
 #include "gpio_init.h"
 #include "seg7_display.h"
 #include <math.h>
 
-s16 result = 0;
+// Global variables from main.c
+extern s16 result;
+extern s8 firstOperand;
+extern s8 secondOperand;
 
-s16 add(u8 upButton, s8 firstOperand, s8 secondOperand)
+// Also from main.c, representing the values of 4 push buttons
+extern u8 leftButton;
+extern u8 rightButton;
+extern u8 upButton;
+extern u8 downButton;
+
+void add(s8 a, s8 b)
 {
 	while(upButton)
 	{
@@ -20,11 +23,10 @@ s16 add(u8 upButton, s8 firstOperand, s8 secondOperand)
 		displayNumber(result);
 	}
 
-	result =  firstOperand + secondOperand;
-	return result;
+	result =  a + b;
 }
 
-s16 subtract(u8 downButton, s8 firstOperand, s8 secondOperand)
+void subtract(s8 a, s8 b)
 {
 	while(downButton)
 	{
@@ -32,11 +34,10 @@ s16 subtract(u8 downButton, s8 firstOperand, s8 secondOperand)
 		displayNumber(result);
 	}
 
-	result = firstOperand - secondOperand;
-	return result;
+	result = a - b;
 }
 
-s16 multiply(u8 leftButton, s8 firstOperand, s8 secondOperand)
+void multiply(s8 a, s8 b)
 {
 	while(leftButton)
 	{
@@ -44,11 +45,10 @@ s16 multiply(u8 leftButton, s8 firstOperand, s8 secondOperand)
 		displayNumber(result);
 	}
 
-	result = firstOperand * secondOperand;
-	return result;
+	result = a * b;
 }
 
-s16 divide(u8 rightButton, s8 firstOperand, s8 secondOperand)
+void divide(s8 a, s8 b)
 {
 	while(rightButton)
 	{
@@ -56,11 +56,10 @@ s16 divide(u8 rightButton, s8 firstOperand, s8 secondOperand)
 		displayNumber(result);
 	}
 
-	result = firstOperand / secondOperand;
-	return result;
+	result = a / b;
 }
 
-s16 power(u8 upButton, s8 firstOperand, s8 secondOperand)
+void power(s8 a, s8 b)
 {
 	while(upButton)
 	{
@@ -68,11 +67,10 @@ s16 power(u8 upButton, s8 firstOperand, s8 secondOperand)
 		displayNumber(result);
 	}
 
-	result = pow(firstOperand, secondOperand);
-	return result;
+	result = pow(a, b);
 }
 
-s16 squareRoot(u8 downButton, s8 firstOperand, s8 secondOperand)
+void squareRoot(s8 a)
 {
 	while(downButton)
 	{
@@ -80,6 +78,5 @@ s16 squareRoot(u8 downButton, s8 firstOperand, s8 secondOperand)
 		displayNumber(result);
 	}
 
-	result = sqrt(firstOperand);
-	return result;
+	result = sqrt(a);
 }

@@ -1,2 +1,2 @@
    text	   data	    bss	    dec	    hex	filename
-  46212	    532	   2408	  49152	   c000	Calculator.elf
+  46120	    532	   2404	  49056	   bfa0	Calculator.elf
