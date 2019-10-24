@@ -13,7 +13,8 @@ C_SRCS += \
 ../src/platform.c \
 ../src/seg7_display.c \
 ../src/timer_interrupt_func.c \
-../src/xinterruptES3.c 
+../src/xinterruptES3.c \
+../src/xuart_receiver.c 
 
 OBJS += \
 ./src/gpio_init.o \
@@ -22,7 +23,8 @@ OBJS += \
 ./src/platform.o \
 ./src/seg7_display.o \
 ./src/timer_interrupt_func.o \
-./src/xinterruptES3.o 
+./src/xinterruptES3.o \
+./src/xuart_receiver.o 
 
 C_DEPS += \
 ./src/gpio_init.d \
@@ -31,7 +33,8 @@ C_DEPS += \
 ./src/platform.d \
 ./src/seg7_display.d \
 ./src/timer_interrupt_func.d \
-./src/xinterruptES3.d 
+./src/xinterruptES3.d \
+./src/xuart_receiver.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

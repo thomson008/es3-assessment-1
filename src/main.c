@@ -5,9 +5,12 @@
 #include "xgpio.h"
 #include "gpio_init.h"
 
+int uartReceive();
+
 // Declaration of functions to start running the calculator and determine which button was pressed
 void runCalculator();
 void readButtons();
+void readNumbers();
 
 // Functions declarations for arithmetical operations
 void add(u8 firstOperand, u8 secondOperand);
@@ -55,16 +58,21 @@ int main()
 		return 0;
 	}
 
-	print("System initialisation successful!");
+	print("System initialisation successful!\n\r");
 
-	runCalculator();
+	print("Change addition and subtraction to power and square root?\n\r"
+			"Type 'y' or 'n' and press enter.\n\r");
+
+	int enableExtraOps = uartReceive();
+
+	runCalculator(enableExtraOps);
 
 	cleanup_platform();
 	return 0;
 }
 
 // Function that starts the calculator and keeps it running forever
-void runCalculator()
+void runCalculator(int mode)
 {
 	while (1)
 	{
@@ -72,24 +80,27 @@ void runCalculator()
 		displayNumber(result);
 		XGpio_DiscreteWrite(&LED_OUT, 1, result);
 
-		// Read the 16 bit number from slide switches
-		slideSwitchIn = XGpio_DiscreteRead(&SLIDE_SWITCHES, 1);
-
-		// Get the first number by taking 8 MSB of slideSwitchIn
-		firstOperand = slideSwitchIn >> 8;
-
-		// Get the second number by taking 8 LSB of slideSwitchIn
-		secondOperand = slideSwitchIn & 0xFF;
-
+		readNumbers();
 		readButtons();
 
 		// Perform appropriate arithmetic operation according to which button was pressed
 		if (upButton)
-			// Can change between addition and power (there is not enough buttons to assign all the ops separately)
-			add(firstOperand, secondOperand);
+		{
+			// Can change between addition and power (there is not enough buttons to
+			//assign all the ops separately)
+			if (mode == 'y')
+				power(firstOperand, secondOperand);
+			else
+				add(firstOperand, secondOperand);
+		}
 		else if (downButton)
+		{
 			// Can change between subtraction and square root
-			subtract(firstOperand, secondOperand);
+			if (mode == 'y')
+				squareRoot(firstOperand);
+			else
+				subtract(firstOperand, secondOperand);
+		}
 		else if (leftButton)
 			multiply(firstOperand, secondOperand);
 		else if (rightButton)
@@ -104,4 +115,16 @@ void readButtons()
 	leftButton = XGpio_DiscreteRead(&P_BTN_LEFT, 1);
 	rightButton = XGpio_DiscreteRead(&P_BTN_RIGHT, 1);
 	return;
+}
+
+void readNumbers()
+{
+	// Read the 16 bit number from slide switches
+	slideSwitchIn = XGpio_DiscreteRead(&SLIDE_SWITCHES, 1);
+
+	// Get the first number by taking 8 MSB of slideSwitchIn
+	firstOperand = slideSwitchIn >> 8;
+
+	// Get the second number by taking 8 LSB of slideSwitchIn
+	secondOperand = slideSwitchIn & 0xFF;
 }
